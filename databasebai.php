@@ -22,6 +22,7 @@ function queryDB($sql_txt){
     if($rs->num_rows>0){ // kiem tra xem co du lieu hay ko
         while ($row = $rs->fetch_assoc()){
             $home[] = $row;
+
         }
     }
     return $home;
