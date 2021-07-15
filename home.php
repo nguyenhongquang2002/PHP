@@ -1,3 +1,5 @@
+<?php include_once "databasebai.php";?>
+<?php session_start();?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,12 +7,10 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cửa Hàng Thế Giời</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <link rel="stylesheet" href="public/css/ListTable.css">
-</head>
+    <title>Danh sách Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" >
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,183 +47,73 @@
     </div>
 </nav>
 <?php
-$category = [];
-$category[] = [
-    "id"=>1,
-    "name"=>"Giày Adidas",
-    "price"=>1000
-];
-$category[] = [
-    "id"=>2,
-    "name"=>"Đồng hồ Apple watch",
-    "price"=>1500
-];
-$category[] = [
-    "id"=>3,
-    "name"=>"Iphone 12",
-    "price"=>2000
-];
-$category[] = [
-    "id"=>4,
-    "name"=>"Áo Phông",
-    "price"=>500
-];
-$category[] = [
-    "id"=>5,
-    "name"=>"Quần Đùi",
-    "price"=>500
-];
+setcookie("title","SAN PHAM SHOP",time()+3000,"/quang_php");
+$conn = connectDB();
+$sql_txt = "select  * from hocsinhs";
+$dssanpham  = queryDB($sql_txt);
 ?>
-<h1>Thế Giới Của Tôi</h1>
-<div class="btn-add-new">
-    <button onclick="location.href='AddProduct.php'" class="btn btn-success btn-lg">Add new product</button>
-</div>
-<table class="table table-striped table-bordered">
-    <thead>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th class="thead-button"></th>
-    </thead>
-    <tbody>
-    <?php foreach ($category as $item) {?>
-        <tr>
-            <td><?php echo $item["id"] ?></td>
-            <td><?php echo $item["name"] ?></td>
-            <td><?php echo $item["price"] ?></td>
-            <td class="item-button">
-                <button onclick="location.href='EditProduct.php'" type="button" class="btn btn-primary btn-lg">Edit</button>
-            </td>
-        </tr>
-    <?php } ?>
+<a href="themsanpham.php" class="btn btn-primary btn-lg">Thêm SP</a>
+<a href="tranggiohang.php" class="btn btn-success btn-lg">Đã Thêm Giỏ Hàng</a>
+<table class="table">
+    <?php
+    if ($dssanpham != null) {
+        foreach ($dssanpham as $item){?>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Tel</th>
+        <th scope="col">Address</th>
+        <th scope="col">Sửa / Xóa</th>
+        <th scope="col">Thêm</th>
+        <th scope="col">Xem Chi Tiết</th>
+
+    </tr>
+    <tr>
+        <td scope="row">#</td>
+        <td><?php echo $item["name"]?></td>
+        <td><?php echo $item["price"]?></td>
+        <td><?php echo $item["tel"]?></td>
+        <td><?php echo $item["address"]?></td>
+        <td><a href="suasanpham.php?id=<?php echo $item["id"]; ?> "class="btn btn-primary btn-lg">Sửa</a> | <a href="xoasanpham.php?id=<?php echo $item["id"]; ?>" class="btn btn-primary btn-lg">Xóa</a></td>
+        <th><a href="giohangsanpham.php?id=<?php echo $item["id"]; ?>" class="btn btn-success btn-lg">Thêm Giỏ Hàng</a></th>
+        <th><a href="chitietsanpham.php?id=<?php echo $item["id"]; ?>" class="btn btn-primary btn-lg">Chi Tiết Sản Phẩm</a></th>
+    </tr>
+    <?php }
+    }
+    else {?>
+    <?php }
+    ?>
     </tbody>
 </table>
-<!-- Footer -->
-<footer class="text-center text-lg-start bg-light text-muted">
-    <!-- Section: Social media -->
-    <section
-            class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
-    >
-        <!-- Left -->
-        <div class="me-5 d-none d-lg-block">
-            <span>Get connected with us on social networks:</span>
-        </div>
-        <!-- Left -->
-
-        <!-- Right -->
-        <div>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
-        <!-- Right -->
-    </section>
-    <!-- Section: Social media -->
-
-    <!-- Section: Links  -->
-    <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <!-- Content -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>CHÚ Ý
-                    </h6>
-                    <p>
-                        CÙNG CHUNG TAY ĐẨY LÙI COVID NHÉ <3
-                        ĐANG Ở CHỖ NÀO NGỒI YÊN CHỖ ĐẤY
-                        VIỆT NAM CỐ LÊN
-                    </p>
+<footer class="text-center text-white" style="background-color: #45637d;">
+    <!-- Grid container -->
+    <div class="container p-4">
+        <!-- Section: Iframe -->
+        <section class="">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                    <div class="ratio ratio-16x9">
+                        <iframe
+                                class="shadow-1-strong rounded"
+                                src="https://www.youtube.com/embed/vlDzYIIOYmM"
+                                title="YouTube video"
+                                allowfullscreen
+                        ></iframe>
+                    </div>
                 </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        PHÒNG CHỐNG DỊCH
-                    </h6>
-                    <p>
-                        <a href="https://ncov.moh.gov.vn/trang-chu!" class="text-reset">BỘ Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://ncov.moh.gov.vn/trang-chu!" class="text-reset">BỘ Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://ncov.moh.gov.vn/trang-chu!" class="text-reset">BỘ Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://ncov.moh.gov.vn/trang-chu!" class="text-reset">BỘ Y TẾ</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        COVID-19
-                    </h6>
-                    <p>
-                        <a href="https://tokhaiyte.vn/" class="text-reset">KHAI BÁO Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://tokhaiyte.vn/!" class="text-reset">KHAI BÁO Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://tokhaiyte.vn/!" class="text-reset">KHAI BÁO Y TẾ</a>
-                    </p>
-                    <p>
-                        <a href="https://tokhaiyte.vn/" class="text-reset">KHAI BÁO Y TẾ</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Contact
-                    </h6>
-                    <p><i class="fas fa-home me-3"></i> Hà Nội, NY 30000, VN</p>
-                    <p>
-                        <i class="fas fa-envelope me-3"></i>
-                        nguyenhongquang2002@gmail.com
-                    </p>
-                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-                    <p><i class="fas fa-print me-3"></i> + 09 661 868 60</p>
-                </div>
-                <!-- Grid column -->
             </div>
-            <!-- Grid row -->
-        </div>
-    </section>
-    <!-- Section: Links  -->
+        </section>
+        <!-- Section: Iframe -->
+    </div>
+    <!-- Grid container -->
 
     <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://www.facebook.com/nguyenhongquang3005.HN">Nguyễn Hồng Quang</a>
+        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
     <!-- Copyright -->
 </footer>
-<!-- Footer -->
 </body>
 </html>

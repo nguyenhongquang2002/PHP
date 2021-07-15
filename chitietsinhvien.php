@@ -1,3 +1,4 @@
+<?php include_once "database.php";?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,16 +10,23 @@
 </head>
 <body>
 <?php
-$sv = [
-    "name"=>"Nguyễn Văn An",
-    "age"=>22,
-    "tel"=>"0987661"
-];
 ?>
-<ul>
-    <?php foreach ($sv as $key=>$value){?>
-        <li><?php echo $key.":".$value;?></li>
-    <?php } ?>
-</ul>
+    <a href="list.php"><< Trở lại</a>
+    <?php
+    //phải lấy được id của sinh viên
+    $id = $_GET["id"];
+    //truy van sinh vien theo id
+
+        $sql_txt = "select * from sinhviens where id =$id";
+        $ds = queryDB($sql_txt); // ds se chi co toi da 1 row
+        if (count($ds)==0) header("location: list.php");//redirect ve list neu khong tim thay sv
+        $sv = $ds[0];
+    ?>
+    <h1><?php echo $_COOKIE["title"];?></h1>
+    <ul>
+        <?php foreach ($sv as $key=>$value){?>
+            <li><?php echo $key.":".$value;?></li>
+        <?php } ?>
+    </ul>
 </body>
 </html>
