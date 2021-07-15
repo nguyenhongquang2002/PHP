@@ -25,4 +25,5 @@ function queryDB($sql_txt){
         }
     }
     return $home;
+
 }

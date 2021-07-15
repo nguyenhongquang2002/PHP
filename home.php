@@ -29,8 +29,6 @@ $dssanpham  = queryDB($sql_txt);
         <th scope="col">ISBN</th>
         <th scope="col">pub_year</th>
         <th scope="col">available</th>
-        <th scope="col">Sửa / Xóa</th>
-        <th scope="col">Xem Chi Tiết</th>
 
 
     </tr>
@@ -42,8 +40,6 @@ $dssanpham  = queryDB($sql_txt);
         <td><?php echo $item["ISBN"]?></td>
         <td><?php echo $item["pub_year"]?></td>
         <td><?php echo $item["available"]?></td>
-        <td><a href="suasanpham.php?id=<?php echo $item["id"]; ?> "class="btn btn-primary btn-lg">Sửa</a> | <a href="xoasanpham.php?id=<?php echo $item["id"]; ?>" class="btn btn-primary btn-lg">Xóa</a></td>
-        <th><a href="chitietsanpham.php?id=<?php echo $item["id"]; ?>" class="btn btn-primary btn-lg">Chi Tiết Sách</a></th>
     </tr>
     <?php }
     }
