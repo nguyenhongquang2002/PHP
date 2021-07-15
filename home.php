@@ -47,6 +47,7 @@ $dssanpham  = queryDB($sql_txt);
     <?php }
     ?>
     </tbody>
+
 </table>
 </body>
 </html>

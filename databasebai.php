@@ -23,6 +23,7 @@ function queryDB($sql_txt){
         while ($row = $rs->fetch_assoc()){
             $home[] = $row;
 
+
         }
     }
     return $home;
