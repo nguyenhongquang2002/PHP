@@ -32,6 +32,7 @@ $dssanpham  = queryDB($sql_txt);
         <th scope="col">Sửa / Xóa</th>
         <th scope="col">Xem Chi Tiết</th>
 
+
     </tr>
     <tr>
         <td scope="row">#</td>
